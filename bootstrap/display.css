@@ -1,0 +1,25 @@
+#logout{
+  float: right;
+  padding-right: 15px;
+  margin-right: 30px;
+}
+.active a{
+  background-color: blue;
+}
+#avatar{
+  margin: 6px;
+  width: 38px;
+  height: 38px;
+}
+h3{
+  text-align: center;
+}
+.panel-body{
+  text-align: left;
+}
+#info{
+  font-size: 23px !important;
+}
+[name=logout], [name=add]{
+  margin-top: 5px;
+}

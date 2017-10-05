@@ -1,0 +1,41 @@
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+	    <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			 <h3 class="modal-title" id="myModalLabel">Update your profile </h3>
+	    </div>
+		<div class="modal-body" style="padding:40px 50px;">
+			<div class="alert alert-success alert-dismissable">
+			 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				 <strong>Success!</strong>
+			 </div>
+			<form role="form" id="update-user-form" method="POST">
+				<div class="form-group">
+				    <label for="username"><span class="glyphicon glyphicon-user"></span> Name</label>
+					<input type="text" class="form-control" name="username" id='username' placeholder="Enter Name" autocomplete="new-password" required>
+				</div>
+        <div class="form-group">
+          <label for="phoneUser"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Password</label>
+          <input type="password" class="form-control" name="passwordUser" id='passwordUser' placeholder="Enter Password" autocomplete="off">
+        </div>
+				<div class="form-group">
+          <label for="phoneUser"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Confirm Password</label>
+          <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" autocomplete="off">
+        </div>
+				<div class="form-group">
+				    <label for="ageUser"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Age</label>
+					<input type="number" class="form-control" name="ageUser" id="ageUser" placeholder="Enter Age" autocomplete="off" required>
+				</div>
+				<div class="form-group">
+					<label for="phoneUser"><i class="fa fa-phone" aria-hidden="true"></i> Phone</label>
+					<input type="tel" class="form-control" name="phoneUser" id="phoneUser" placeholder="Enter Phone" autocomplete="off" required>
+				</div>
+        <div class="form-group">
+          <label for="pictureUser"><i class="fa fa-picture-o" aria-hidden="true"></i> Picture</label>
+          <input type="text" class="form-control" name="pictureUser" id="userPicture" placeholder="Enter picture link" autocomplete="off" required>
+        </div>
+				<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Update</button>
+			</form>
+		</div>
+	</div>
+</div>

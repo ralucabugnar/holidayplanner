@@ -1,0 +1,8 @@
+delete sa mearga bine
+av free days cand da approved
+sa nu isi ia 2 concedii in aceeasi perioada de timp (check nr total de ziel sa fie bun)
+sarbatori
+set alt manager
+la refresh()
+concediu neplatit care nu se scade.- concediu de studiu neplatit?
+update user => session update

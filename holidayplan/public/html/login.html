@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Holliday Planner</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <h3 class="text-muted"></h3>
+      </div>
+      <div class="jumbotron text-center">
+        <h1>Holiday Planner</h1>
+        <form class="form-signin" name="myform" method="post" action="display.html" onsubmit="return false">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <div class="input-group col-xs-6 col-xs-offset-3">
+            <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" name="email" placeholder="Email">
+          </div><br>
+          <div class="input-group col-xs-6 col-xs-offset-3">
+            <span class="input-group-addon"><i class="fa fa-lock fa-2" aria-hidden="true"></i></span>
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div><br>
+        <button class="btn btn-lg btn-primary" type="submit" id="login" ><i class="fa fa-sign-in" aria-hidden="true"> Sign in</i></button>
+      </form>
+      </div>
+    </div>
+    <div class="load">
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/5a638b4cc0.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+  </body>
+</html>
