@@ -9,8 +9,9 @@ $(document).ready(function () {
     console.log(password);
     var email = $("[name=email]").val(),
         user = new appNameSpace.User("", password, "", "", "", "", "", email, "", "", ""), found;
+    var regexEmail=  /\w{1,30}\@[a-z0-9.-]+\.[a-z]{1,3}$/;
     $.post(appConfig.url + appConfig.api + "login", { email: email, password: password }).done(function( data ) {
-        if ( user.email == data.email && user.password == data.password ) {
+        if (user.email.match(regexEmail) && user.email == data.email && user.password == data.password ) {
           found = 1;
           user['userID'] = data.userID;
           user['isActive'] = data.isActive;

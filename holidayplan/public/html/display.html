@@ -1,4 +1,4 @@
-<html lang="en">
+<html>
    <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,10 +106,10 @@
          </div>
        </div>
 
-       <ul class="nav nav-tabs" id="tabs">
-         <li class="active"><a data-toggle="tab" href="#calendartab"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a></li>
+       <ul class="nav nav-tabs" id="tabs" >
+         <li id="tabClickCalendar" class="active" ><a data-toggle="tab" href="#calendartab"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</a></li>
          <li><a data-toggle="tab" href="#table"><i class="fa fa-table" aria-hidden="true"></i> Table</a></li>
-         <!-- <li><a data-to ggle="tab" href="#management"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Management</a></li> -->
+         <!-- <li><a data-toggle="tab" href="#management"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Management</a></li> -->
        </ul>
        <div class="tab-content" >
          <div id="calendartab" class="tab-pane fade in active">
@@ -157,15 +157,18 @@
               <div class="alert alert-danger">
                 <strong>You don't have enough available free days!</strong>
               </div>
+              <div class="alert alert-danger">
+                  <strong>Select another dates!</strong>
+              </div>
              <form id="eventForm" method="post" class="form-horizontal" onsubmit="return false">
                <div class="form-group">
                  <label class="col-xs-3 control-label">Start date</label>
                  <div class="col-xs-5 dateContainer">
-                   <div class="input-group input-append date" id="startDatePicker">
-                     <input id="stdate" type="text" class="form-control" name="startDate" />
-                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                   </div>
-                   </div>
+                     <div class="input-group input-append date" id="startDatePicker">
+                         <input id="stdate" type="text" class="form-control" name="startDate" />
+                         <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                     </div>
+                 </div>
                </div>
                <div class="form-group">
                  <label class="col-xs-3 control-label">End date</label>
@@ -197,7 +200,7 @@
                </div>
 
                <div class="modal-footer">
-                 <button type="submit" class="btn btn-primary">Save changes</button>
+                 <button type="submit" class="btn btn-primary" id="save" >Save changes</button>
                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                  </div>
              </div>
@@ -221,6 +224,21 @@
 	  </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="approveFreedays" aria-hidden="true" id="delete-modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure ?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="delete-modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-primary" id="delete-modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="alert" role="alert" id="result"></div>
    <div class="modal fade" id="myModalUpdateUser" tabindex="-1" role="document" aria-labelledby="myModalLabel">
    </div>
@@ -239,11 +257,11 @@
  <script src="https://use.fontawesome.com/5a638b4cc0.js"></script>
  <script src="https://momentjs.com/downloads/moment.min.js"></script>
  <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
- <script type="text/javascript" src="../js/display.js"></script>
- <script src="../js/calendar.js"></script>
- <script src="../js/fullCalendar.js"></script>
- <script src="../js/login.js"></script>
+ <script type="text/javascript" src="../js/calendar.js"></script>
+ <script type="text/javascript" src="../js/fullCalendar.js"></script>
+ <script type="text/javascript" src="../js/login.js"></script>
  <script type="text/javascript" src="../js/managerTable.js"></script>
  <script type="text/javascript" src="../js/userTable.js"></script>
+ <script type="text/javascript" src="../js/display.js"></script>
   </body>
  </html>

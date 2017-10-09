@@ -9,7 +9,6 @@
  * For event drag & drop, requires jQuery UI draggable.
  * For event resizing, requires jQuery UI resizable.
  */
-
 (function($, undefined) {
 
 
@@ -127,7 +126,7 @@ $.fn.fullCalendar = function(options) {
 
 	  $('.fc-event-title:contains("approved")').parent().addClass( "fc-event-approved" );
 	  $('.fc-event-title:contains("rejected")').parent().addClass( "fc-event-rejected" );
-		console.log('color');
+
 	}
 
 	// method calling
@@ -194,8 +193,8 @@ function setDefaults(d) {
 
 
 function Calendar(element, options, eventSources) {
-	var t = this;
 
+	var t = this;
 
 	// exports
 	t.options = options;
@@ -260,11 +259,10 @@ function Calendar(element, options, eventSources) {
 		}
 		else if (elementVisible()) {
 			// mainly for the public API
-			calcSize();
+			 calcSize();
 			_renderView(inc);
 		}
 	}
-
 
 	function initialRender() {
 		tm = options.theme ? 'ui' : 'fc';
@@ -339,7 +337,7 @@ function Calendar(element, options, eventSources) {
 
 
 	/* View Rendering
-	-----------------------------------------------------------------------------*/
+	---------------------------------------------------------------------------*/
 
 
 	function changeView(newViewName) {

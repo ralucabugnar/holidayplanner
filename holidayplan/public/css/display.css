@@ -59,7 +59,7 @@ li {
   float: left;
 }
 
-.modal-body> div:first-child , .modal-body> div:nth-child(2) {
+.modal-body> div:first-child , .modal-body> div:nth-child(2), .modal-body> div:nth-child(3) {
   display: none;
 }
 

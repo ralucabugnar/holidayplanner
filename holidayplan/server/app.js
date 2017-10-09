@@ -4,6 +4,12 @@ var app       =    express();
 var bodyParser = require("body-parser");
 var bcrypt = require('bcryptjs');
 var sha256 = require('js-sha256');
+var Holidays = require('date-holidays');
+var year = new Date().getFullYear();
+hd = new Holidays('RO')
+
+// get all holidays for the year 2017
+hd.getHolidays(year);
 
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
@@ -13,6 +19,16 @@ var pool      =    mysql.createPool({
     database : 'holidayPlanner',
     debug    :  false
 });
+function legalFreeHolidays(req,res){
+  hd = new Holidays('RO')
+  hd.getHolidays(year);
+    res.json(hd.getHolidays(year));
+  return;
+/*  connection.query("UPDATE legalholidays SET startDate = '" + hd.getHolidays(year).start + "'AND name='"+ hd.getHolidays(year).name +"' WHERE type = 'public'",function(err,rows){
+      connection.release();
+  });
+  */
+}
 
 function setToken (token, id) {
   pool.getConnection(function(err,connection){
@@ -140,7 +156,7 @@ function getFreeDays(req,res) {
   });
 }
 
-function getLegalFreeDays(req,res) {
+/*function getLegalFreeDays(req,res) {
   var params = req.query;
     pool.getConnection(function(err,connection){
         if (err) {
@@ -160,7 +176,7 @@ function getLegalFreeDays(req,res) {
         });
   });
 }
-
+*/
 function getManagerFreeDays(req,res) {
     pool.getConnection(function(err,connection){
         if (err) {
@@ -168,7 +184,7 @@ function getManagerFreeDays(req,res) {
           return;
         }
 		var token = req.query.token;
-        connection.query("SELECT user.name, user.position, user.email, freedays.startDate, freedays.endDate, freedays.days, freedays.type, freedays.comment, freedays.approved, freedays.id FROM freedays JOIN management ON freedays.userID = management.userID AND management.managerID = (SELECT user.userID FROM user WHERE user.token='" + token + "') JOIN user ON user.userID=freedays.userID ORDER BY freedays.startDate DESC",function(err,rows){
+        connection.query("SELECT  user.name, user.position, user.email, freedays.startDate, freedays.endDate, freedays.days, freedays.type, freedays.comment, user.avfreedays, freedays.approved, freedays.id FROM freedays JOIN management ON freedays.userID = management.userID AND management.managerID = (SELECT user.userID FROM user WHERE user.token='" + token + "') JOIN user ON user.userID=freedays.userID ORDER BY freedays.startDate DESC",function(err,rows){
             connection.release();
             if(!err) {
                 res.json(rows);
@@ -518,7 +534,7 @@ function updateFreeDays(req, res){
           res.json({"code" : 100, "status" : "Error in connection database"});
           return;
         }
-		connection.query("UPDATE user SET avfreedays = '" + params.avfreedays + "' WHERE userID = '" + params.userID + "';",function(err,rows){
+		connection.query("UPDATE user SET avfreedays = '" + params.avfreedays + "' WHERE email = '" + params.email + "';",function(err,rows){
             connection.release();
             if(!err) {
                 res.json(rows);
@@ -573,7 +589,9 @@ router.use(function(req,res,next) {
 });
 
 // Provide all routes here, this is for Home page.
-
+router.get("/legalFreeHolidays",function(req,res){
+  legalFreeHolidays(req,res);
+});
 router.post("/login",function(req,res){
   handle_database(req,res);
 });
@@ -612,7 +630,7 @@ router.get("/getFreeDays",function(req,res){
   });
 });
 
-router.get("/getLegalFreeDays",function(req,res){
+/*router.get("/getLegalFreeDays",function(req,res){
   var token = req.query.token;
   isValidToken(token).then(function(result) {
     getLegalFreeDays(req,res);
@@ -621,7 +639,7 @@ router.get("/getLegalFreeDays",function(req,res){
       res.json({"code" : 110, "status" : "Your session has expired and you are loged out. - redirect la login in FE"})
   });
 });
-
+*/
 router.post("/",function(req,res){
   getManagerName(req,res);
 });
@@ -770,6 +788,10 @@ router.get("/updateFreeDays", function(req,res){
     console.log(error);
       res.json({"code" : 110, "status" : "Your session has expired and you are loged out. - redirect la login in FE"})
   });
+});
+
+router.get("/updateAvFreeDays", function(req,res){
+    updateFreeDays(req,res);
 });
 
 // Tell express to use this router with /api before.

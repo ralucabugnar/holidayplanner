@@ -29,7 +29,7 @@ $(document).ready(function(){
         freeDays[i].comment,
         freeDays[i].approved,
         freeDays[i].isActive,
-        '<i class="fa fa-times" onclick="deleteHolidayModal(this,' + freeDays[i].id +')"></i>'
+        '<i class="fa fa-times" onclick="displayDeleteModal(this,' + freeDays[i].id + ',' + freeDays[i].approved + ')"></i>'
       ] ).draw( false )
       .nodes()
       .to$()
@@ -64,10 +64,25 @@ $(document).ready(function(){
   });
 })
 
-function deleteHolidayModal(elem,id){
-  $.post(appConfig.url + appConfig.api+ 'deleteHoliday?token=' + token, { id: id}).done(function( data ) {
-    $(elem).addClass("test");
-    $(elem).parent().parent().slideUp("slow");
-    console.log($(elem).parent().parent());
- });
+function displayDeleteModal(elem, id, approved){
+    var deleteModal =  $("#delete-modal");
+	deleteModal.modal('show');
+    $("#delete-modal-btn-yes").click(function(){
+        deleteHolidayModal(elem, id, approved);
+        $("#delete-modal").modal('hide');
+    });
+    $("#delete-modal-btn-no").click(function(){
+        $("#delete-modal").modal('hide');
+    });
+}
+function deleteHolidayModal(elem,id,approved){
+    if (approved != 1) {
+        $.post(appConfig.url + appConfig.api+ 'deleteHoliday?token=' + token, { id: id}).done(function( data ) {
+            $(elem).addClass("test");
+            $(elem).parent().parent().slideUp("slow");
+        });
+    }
+    else {
+        alert("You can not delete this.");
+    }
 }
