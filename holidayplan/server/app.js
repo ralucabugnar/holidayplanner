@@ -6,6 +6,7 @@ var bcrypt = require('bcryptjs');
 var sha256 = require('js-sha256');
 var Holidays = require('date-holidays');
 var year = new Date().getFullYear();
+var fileUpload = require('express-fileupload');
 hd = new Holidays('RO')
 
 // get all holidays for the year 2017
@@ -309,6 +310,51 @@ function getManagerDetails(req,res) {
   });
 }
 
+function upload(req,res) {
+    //var params = req.body;
+  /*  console.log("a");
+    pool.getConnection(function(err,connection){
+        if (err) {
+          res.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }
+        console.log(req);
+        var sampleFile = req.files.profileImage.data;
+        console.log(sampleFile);
+        connection.query("UPDATE user SET picture ="+ sampleFile +" WHERE userID = " + 4,function(err,rows){
+            connection.release();
+            if(!err) {
+                res.json(rows);
+            }
+        });
+        connection.on('error', function(err) {
+              res.json({"code" : 100, "status" : "Error in connection database"});
+              return;
+        });
+      });
+      */
+
+      pool.getConnection(function(err,connection){
+          if (err) {
+            res.json({"code" : 100, "status" : "Error in connection database"});
+            return;
+          }
+          var sampleFile = req.files.profileImage.data.toString("base64");
+          console.log(sampleFile);
+          connection.query("UPDATE user SET picture ='"+ sampleFile +"' WHERE userID = " + 4,function(err,rows){
+              connection.release();
+              if(!err) {
+
+                  res.json(rows);
+              }
+          });
+          connection.on('error', function(err) {
+                res.json({"code" : 100, "status" : "Error in connection database"});
+                return;
+          });
+    });
+};
+
 function getManagerName(req,res) {
     var params = req.body;
     pool.getConnection(function(err,connection){
@@ -567,8 +613,10 @@ function getAllManagers(req, res) {
         });
   });
 }
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 app.use(function(req,res, next){
   res.header('Access-Control-Allow-Origin', "*");
@@ -628,6 +676,17 @@ router.get("/getFreeDays",function(req,res){
     console.log(error);
       res.json({"code" : 110, "status" : "Your session has expired and you are loged out. - redirect la login in FE"})
   });
+});
+
+router.post('/upload', function(req, res) {
+  //var token = req.query.token;
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  upload(req,res);
+  //let sampleFile = req.files.profileImage.data;
+  // Use the mv() method to place the file somewhere on your server
 });
 
 /*router.get("/getLegalFreeDays",function(req,res){
@@ -794,8 +853,6 @@ router.get("/updateAvFreeDays", function(req,res){
     updateFreeDays(req,res);
 });
 
-// Tell express to use this router with /api before.
-// You can put just '/' if you don't want any sub path before routes.
 
 app.use("/api",router);
 

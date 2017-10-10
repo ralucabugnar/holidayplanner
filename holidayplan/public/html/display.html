@@ -201,7 +201,7 @@
 
                <div class="modal-footer">
                  <button type="submit" class="btn btn-primary" id="save" >Save changes</button>
-                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                 <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
                  </div>
              </div>
              </form>
@@ -245,6 +245,8 @@
 
 	<div class="modal fade" id="myModalUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	</div>
+<input id="fileupload" type="file" name="profileImage" multiple>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js" charset="utf-8"></script>
  <script type="text/javascript" src="../js/config.js"></script>
  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -263,5 +265,9 @@
  <script type="text/javascript" src="../js/managerTable.js"></script>
  <script type="text/javascript" src="../js/userTable.js"></script>
  <script type="text/javascript" src="../js/display.js"></script>
+ <script type="text/javascript" src="../js/vendor/jquery.ui.widget.js"></script>
+ <script type="text/javascript" src="../js/jquery.fileupload.js"></script>
+ <script type="text/javascript" src="../js/jquery.iframe-transport.js"></script>
+ <script src="blob-util.js"></script>
   </body>
  </html>

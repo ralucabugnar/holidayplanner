@@ -24,13 +24,39 @@ $('#tabClickCalendar').click(function(){
     reloadJs('../js/calendar.js');
   }, 400);
 });
-
+//$("#save").click(function(){
+//  location.reload();
+//});
 $(document).ready( function () {
     $('#tabClick').addClass('active');
   var theUser = JSON.parse(sessionStorage.getItem('user')),
       token = sessionStorage.getItem('token'),
       currentDate = moment(),
       sum = 0, manager, manId, dates = new Array(), isOk = true;
+
+
+
+
+//file upload
+        $('#fileupload').fileupload({
+            url: appConfig.url + appConfig.api + 'upload',
+            dataType: 'json',
+            done: function (e, data) {
+              console.log(data);
+            //  var blobURL = blobUtil.createObjectURL("");
+
+              //var newImg = document.createElement('img');
+            //  newImg.src = blobURL;
+
+              //document.body.appendChild(newImg);
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo('#files');
+
+                    console.log(file);
+                });
+            }
+        });
+    //file upload
 
   if ( theUser != null ) {
     $.post(appConfig.url + appConfig.api, { id: theUser.userID }).done(function( data ) {
@@ -293,6 +319,8 @@ $(document).ready( function () {
                    }
 
                    check(stdate, enddate, holidayOptions, addHoliday);
+
+
           }
         });
 
@@ -458,4 +486,13 @@ $(document).ready( function () {
            }
        }
    }
+
+   $("#close").click(function(){
+     location.reload();
+   });
+   $("#save").click(function(){
+       setTimeout(function(){
+         location.reload();
+       },1000);
+   });
 });
