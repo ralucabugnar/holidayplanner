@@ -1,15 +1,30 @@
-.dataTables_paginate a.paginate_button:not(.current){
-	background-color: white;
+.search{
+  position: relative;
+  left: 710px;
 }
+.labsearch{
+  position: relative;
+  left: 705px;
+  top: 5px;
+}
+.dataTables_filter{
+    display: none;
+}
+.dataTables_paginate a.paginate_button:not(.current) {
+    background-color: white;
+}
+
 .fa-check {
-	color: green;
-	cursor: pointer;
+    color: green;
+    cursor: pointer;
 }
+
 .fa-times {
-	color: red;
-	cursor: pointer;
+    color: red;
+    cursor: pointer;
 }
+
 .fa-check:hover, .fa-times:hover {
-	font-size: 25px;
-	text-shadow: 1px 1px grey;
+    font-size: 25px;
+    text-shadow: 1px 1px grey;
 }

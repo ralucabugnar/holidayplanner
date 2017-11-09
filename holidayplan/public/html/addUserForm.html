@@ -1,33 +1,52 @@
+<html>
+<head>
+	<link rel="stylesheet" href="../css/adduserform.css">
+</head>
 <div class="modal-dialog" role="document">
 	<div class="modal-content">
-	    <div class="modal-header">
+		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			 <h3 class="modal-title" id="myModalLabel">Add a new user </h3>
-	    </div>
+			<h3 class="modal-title" >Add a new user </h3>
+		</div>
 		<div class="modal-body" style="padding:40px 50px;">
 			<div class="alert alert-success">
-				 <strong>Success!</strong>
-			 </div>
+				<strong>Success!</strong>
+			</div>
 			<form role="form" id="add-user-form" method="POST">
 				<div class="form-group">
-				    <label for="username"><span class="glyphicon glyphicon-user"></span> Username</label>
-					<input type="text" class="form-control" name="username" placeholder="Enter Name" required>
+					<label for="username"><span class="glyphicon glyphicon-user"></span> Name</label>
+					<input autocomplete="off" id="nameuser" type="text" class="form-control" name="username" placeholder="Enter Name" required>
+				</div>
+
+				<div class="form-group">
+					<label for="ageUser"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Birthday </label>
+					<input autocomplete="off" type="text" class="form-control disabled-button" name="ageUser"  id="birth" placeholder = "mm/dd/yyyy" required>
+				</div>
+
+				<div class="form-group">
+					<label for="stwork"><i class="fa fa-calendar" aria-hidden="true"></i> Started working</label>
+					<input autocomplete="off" id="dateval" type="text" class="form-control disabled-button" name="stwork" placeholder= "mm/dd/yyyy" required>
+				</div>
+
+				<div class="form-group" id="forAdmin">
+					<label for="new_manageradd"><i class="fa fa-address-card" aria-hidden="true"></i> Manager </label>
+					<select name="new_manageradd" class="form-control disabled-button" title="this field is used only if isActive is 0">
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="email"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+					<input autocomplete="off" type="text" class="form-control disabled-button" name="email" placeholder="Enter Email" required>
 				</div>
 				<div class="form-group">
-				    <label for="ageUser"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Age</label>
-					<input type="number" class="form-control" name="ageUser" placeholder="Enter Age" required>
+					<label for="phoneUser"><i class="fa fa-phone" aria-hidden="true"></i> Phone</label>
+					<input autocomplete="off" type="tel" class="form-control disabled-button" name="phoneUser" placeholder="Enter Phone" required>
 				</div>
+
 				<div class="form-group">
-					<label for="ageUser"><i class="fa fa-calendar" aria-hidden="true"></i> Started working</label>
-					<div class="input-group input-append date" id="stwork">
-						<input id="dateval" type="text" class="form-control" name="stwork" />
-						<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-					</div>
-				</div>
-				<div class="form-group">
-				    <label for="pos"><i class="fa fa-address-card" aria-hidden="true"></i> Position</label>
-					<select name="pos" class="form-control">
-						<option value=""></option>
+					<label for="pos"><i class="fa fa-id-badge" aria-hidden="true"></i> Position</label>
+					<select id="ad_select" name="pos" class="form-control disabled-button">
+						<option value=""> Select position </option>
 						<option >Developer</option>
 						<option >HR</option>
 						<option >QA</option>
@@ -36,15 +55,19 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="emailUser"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
-					<input type="email" class="form-control" name="emailUser" placeholder="Enter Email" required>
+					<label><i class="fa fa-user-circle-o" aria-hidden="true"></i> User type: </label><br>
+					<label><input autocomplete="off" type="checkbox" name="usertype" id="new" checked>New user new account</label><br>
+					<label><input autocomplete="off" type="checkbox" name="usertype" id="old">Old user new account </label><br>
 				</div>
-				<div class="form-group">
-					<label for="phoneUser"><i class="fa fa-phone" aria-hidden="true"></i> Phone</label>
-					<input type="tel" class="form-control" name="phoneUser" placeholder="Enter Phone" required>
+				<div class="form-group" id="avfree">
+					<label for="phoneUser"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Available free days</label>
+					<input autocomplete="off" type="number" class="form-control disabled-button" name="avfreedays" placeholder="Enter free days" required>
 				</div>
-				<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span> Add</button>
+
+				<button type="submit" id="register" class="btn btn-success btn-block" name="addUser" disabled ="disabled"><span class="glyphicon glyphicon-plus"></span> Add</button>
+
 			</form>
 		</div>
 	</div>
 </div>
+</html>

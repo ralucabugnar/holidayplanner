@@ -6,3 +6,6 @@ set alt manager
 la refresh()
 concediu neplatit care nu se scade.- concediu de studiu neplatit?
 update user => session update
+
+
+task 1

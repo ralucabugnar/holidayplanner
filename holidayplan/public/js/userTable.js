@@ -1,73 +1,105 @@
 "use strict";
-window.appNameSpace = window.appNameSpace || { };
+window.appNameSpace = window.appNameSpace || {};
 window.sessionInvalid = false;
-$(document).ready(function(){
-  var freeDays = [],
-      token = sessionStorage.getItem('token');
+$(document).ready(function() {
+    var token = sessionStorage.getItem('token');
+    getHolidays();
+});
 
-  $.get(appConfig.url + appConfig.api + 'getFreeDaysApprover?token=' + token, function(data){
-    if ( data.code == 110 ){
-			if (!appConfig.sessionInvalid) {
-				appConfig.sessionInvalid = true;
-				alert('Session expired');
-        $.post(appConfig.url + appConfig.api+ 'logout', { email: theUser.email}).done(function( data ) {
-       });
-				window.location.href = 'login.html';
-			}
-	}
-    freeDays = data;
-    var table = $('#userTable').DataTable();
-    var j = 1;
-    for (var i=0; i<freeDays.length; i++){
-      table.row.add( [
-        j,
-        freeDays[i].name,
-        freeDays[i].days,
-        moment(freeDays[i].startDate).format("DD/MM/Y"),
-        moment(freeDays[i].endDate).format("DD/MM/Y"),
-        freeDays[i].type,
-        freeDays[i].comment,
-        freeDays[i].approved,
-        freeDays[i].isActive,
-        '<i class="fa fa-times" onclick="deleteHolidayModal(this,' + freeDays[i].id +')"></i>'
-      ] ).draw( false )
-      .nodes()
-      .to$()
-      .addClass();
-      j++;
+function getHolidays() {
+    $("#userTable").DataTable().clear();
+    $.get(appConfig.url + appConfig.api + 'getFreeDaysApprover?token=' + token, function(data) {
+        $("#userTable").DataTable().clear();
+        out(data.code);
+
+        var table = $('#userTable').DataTable({
+
+          "aoColumnDefs": [
+            {
+               bSortable: false,
+               aTargets: [ -1 ]
+            }
+          ],
+                    "columnDefs": [
+             { orderable: false, targets: -1 }
+          ],
+          "bDestroy": true
+        });
+        var j = 1;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].approved == 2) {
+                var acc = 'Not approved';
+            } else if (data[i].approved == 1) {
+                var acc = 'Approved';
+            } else {
+                var acc = 'Pending'
+            }
+            table.row.add([
+                    j,
+                    data[i].name,
+                    data[i].days,
+                    moment(data[i].startDate).format("DD/MM/YYYY"),
+                    moment(data[i].endDate).format("DD/MM/YYYY"),
+                    data[i].type,
+                    data[i].comment,
+                    acc,
+                    '<div onclick="displayDeleteModal(event, this, ' + data[i].id + ',' + data[i].approved + ')"><i class="fa fa-times"</i></div>'
+                ]).draw(false)
+                .nodes()
+                .to$()
+                .addClass();
+            j++;
+        }
+        for (var i = 0; i < data.length; i++) {
+            var appr = $("#userTable>tbody>tr:nth-child(" + (i + 1) + ")>td:nth-last-child(2)");
+            if (appr.html() == "Approved") {
+                $("#userTable>tbody>tr:nth-child(" + (i + 1) + ")").css('backgroundColor', "#d9edf7")
+            } else {
+                $("#userTable>tbody>tr:nth-child(" + (i + 1) + ")").css('backgroundColor', "#f2dede")
+            }
+
+        }
+    });
+}
+
+
+function displayDeleteModal(event, elem, id, approved) {
+    var deleteModal = $("#delete-modal");
+    deleteModal.modal('show');
+
+    $("#delete-modal-btn-yes").one('click', function() {
+        event.stopPropagation();
+        deleteHolidayModal(elem, id, approved);
+        $("#delete-modal").modal('hide');
+    });
+    $("#delete-modal-btn-no").click(function() {
+        $("#delete-modal").modal('hide');
+    });
+}
+
+function deleteHolidayModal(elem, id, approved) {
+    if (approved == 0) {
+        $.post(appConfig.url + appConfig.api + 'deleteHoliday?token=' + token, {
+            id: id
+        }).done(function(data) {
+            $("#userTable").DataTable().clear();
+            getHolidays();
+        });
+    } else {
+        alert("You can not delete this. Please contact your manager.");
+        return;
     }
+}
 
-    for ( var i = 0 ; i < freeDays.length; i++ ){
-      var appr = $("#userTable>tbody>tr:nth-child("+(i+1)+")>td:nth-last-child(3)");
-      var active = $("#userTable>tbody>tr:nth-child("+(i+1)+")>td:nth-last-child(2)");
-
-      if ( appr.html() == "true" ){
-        $("#userTable>tbody>tr:nth-child("+(i+1)+")").css({
-          backgroundColor: "#d9edf7"
-        })
-      }else{
-        $("#userTable>tbody>tr:nth-child("+(i+1)+")").css({
-          backgroundColor: "#f2dede"
-        })
-      }
-
-      if ( active.html() == "true" ){
-        active.css({
-          backgroundColor: "#d9edf7"
-        })
-      }else{
-        active.css({
-          backgroundColor: "#f2dede"
-        })
-      }
+function out(data) {
+    if (data == 110) {
+        if (!appConfig.sessionInvalid) {
+            appConfig.sessionInvalid = true;
+            alert('Session expired');
+            $.post(appConfig.url + appConfig.api + 'logout', {
+                email: theUser.email
+            });
+            window.location.href = 'login.html';
+        }
     }
-  });
-})
-
-function deleteHolidayModal(elem,id){
-  $.post(appConfig.url + appConfig.api+ 'deleteHoliday?token=' + token, { id: id}).done(function( data ) {
-    $(elem).addClass("test");
-    $(elem).parent().parent().slideUp("slow");
-    console.log($(elem).parent().parent());
- });
 }
